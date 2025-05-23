@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+google-generativeai
+passlib[bcrypt]
+python-jose[cryptography]
+Jinja2
+pydantic[email]

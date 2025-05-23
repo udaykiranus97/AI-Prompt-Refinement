@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ ProGenius AI: The Ultimate Prompt Engineering Platform</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/auth.js"></script>
+    <script src="/static/script.js"></script>
+</head>
+<body class="light-theme"> 
+    <script>
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+        window.location.href = "login.html";
+        }
+    </script>
+
+    <div class="main-wrapper">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="#home" class="nav-link">✨ ProGenius AI</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#prompt-engineer" class="nav-link" data-page="prompt-engineer">Prompt Engineer</a></li>
+                <li><a href="#ai-chat" class="nav-link" data-page="ai-chat">AI Chat</a></li>
+            </ul>
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle dark/light theme">
+                <i class="fas fa-moon"></i> </button>
+            
+        </nav>
+
+        <section id="home" class="page hero-section active">
+            <div class="hero-content">
+                <h1 class="hero-title">Unlock the Power of AI, Effortlessly.</h1>
+                <p class="hero-subtitle">ProGenius AI helps you craft perfect prompts and interact with advanced LLMs, transforming your ideas into reality.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="navigateToPage('prompt-engineer')">
+                        <i class="fas fa-magic"></i> Start Prompting
+                    </button>
+                    <button class="btn btn-secondary" onclick="navigateToPage('ai-chat')">
+                        <i class="fas fa-comments"></i> Try AI Chat
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://thumbs.dreamstime.com/b/artificial-intelligence-ai-think-prompts-commands-service-concept-represented-humanoid-figure-thoughtful-gesture-270572873.jpg" alt="AI Generating Ideas">
+            </div>
+        </section>
+
+        <section id="prompt-engineer" class="page prompt-engineering-page">
+            <header class="section-header">
+                <h2 class="section-title"><i class="fas fa-feather-alt"></i> Your AI Prompt Workbench</h2>
+                <p class="section-description">Craft, refine, and optimize your prompts for maximum AI performance.</p>
+            </header>
+            <main class="main-layout">
+                <section class="prompt-section">
+                    <div class="card interactive-card">
+                        <h3 class="card-title"><i class="fas fa-sparkles"></i> Craft Your Prompt</h3>
+                        <div class="input-block">
+                            <textarea id="taskDescription" required rows="3" placeholder=" "></textarea>
+                            <label for="taskDescription">What is your AI task?</label>
+                            <span class="input-hint">e.g., "Write a blog post about future tech", "Generate Python code for a web server"</span>
+                        </div>
+
+                        <div class="input-block">
+                            <select id="category" required>
+                                <option value="please_select">-- Please select a category --</option>
+                                </select>
+                            <label for="category" class="select-label">Select a Prompt Category:</label>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="generatePromptBtn" class="btn btn-primary">
+                                <i class="fas fa-feather-alt"></i> Generate Prompt
+                            </button>
+                            <span id="promptLoadingMessage" class="loading-message" aria-live="polite" aria-hidden="true">
+                                <i class="fas fa-spinner fa-spin"></i> Generating...
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card output-card">
+                        <h3 class="card-title"><i class="fas fa-lightbulb"></i> Your Refined Prompt</h3>
+                        <div class="output-display prompt-output" aria-live="polite">
+                            <pre id="refinedPromptOutput"></pre>
+                            <button id="copyPromptBtn" class="copy-btn" title="Copy prompt to clipboard" aria-label="Copy prompt">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <button id="startChatWithPromptBtn" class="btn btn-secondary">
+                            <i class="fas fa-comments"></i> Chat with this Prompt
+                        </button>
+                    </div>
+
+                    <div class="card interactive-card">
+                        <h3 class="card-title"><i class="fas fa-redo-alt"></i> Refine Further</h3>
+                        <div class="input-block">
+                            <textarea id="userModificationInstructions" rows="2" placeholder=" "></textarea>
+                            <label for="userModificationInstructions">How would you like to modify it?</label>
+                            <span class="input-hint">e.g., "Make it more formal and add specific examples", "Shorten it to 50 words"</span>
+                        </div>
+                        <button id="applyChangesBtn" class="btn btn-primary">
+                            <i class="fas fa-cogs"></i> Apply Changes
+                        </button>
+                    </div>
+                </section>
+
+                <aside class="analysis-section">
+                    <div class="card analysis-card">
+                        <h3 class="card-title"><i class="fas fa-analytics"></i> AI Insights & Suggestions</h3>
+                        <div class="analysis-box">
+                            <h4 class="analysis-title"><i class="fas fa-info-circle"></i> Explanation:</h4>
+                            <ul id="explanationList" class="analysis-list">
+                                <li class="empty-state"><i class="fas fa-lightbulb"></i> Explanation of the prompt's structure and effectiveness will be shown here.</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-box">
+                            <h4 class="analysis-title"><i class="fas fa-lightbulb"></i> Suggestions:</h4>
+                            <ul id="suggestionsList" class="analysis-list">
+                                <li class="empty-state"><i class="fas fa-lightbulb"></i> Suggestions for further refinement or alternative approaches will be provided here.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </main>
+        </section>
+
+        <section id="ai-chat" class="page chat-page">
+            <div class="chat-header">
+                <h2 class="chat-title"><i class="fas fa-robot"></i> ProGenius Chat</h2>
+                <button id="newChatBtn" class="btn btn-secondary">New Chat</button>
+            </div>
+
+            <div class="chat-window" id="chatHistory">
+            <!-- Chat messages will be inserted here -->
+            </div>
+
+            <div class="chat-typing-indicator" id="chatTypingIndicator">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+
+            <form class="chat-input-bar" id="chatForm">
+                <textarea
+                    id="chatInput"
+                    rows="1"
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                ></textarea>
+                <button type="submit" id="sendChatBtn" class="send-btn" aria-label="Send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </section>
+
+
+        <footer class="site-footer">
+            <p>&copy; 2025 ProGenius AI. All rights reserved.</p>
+            <p>Built with passion for prompt engineering.</p>
+            <button id="logoutBtn" class="btn btn-logout">Log Out</button>
+        </footer>
+
+
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem("authToken");
+            window.location.href = "login.html";
+        }
+        document.getElementById("logoutBtn").onclick = logout;
+    </script>
+
+    
+</body>
+</html>
