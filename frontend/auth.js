@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
         if (response.ok && data.token) {
           localStorage.setItem('authToken', data.token);
-          window.location.href = "index.html";
+          window.location.href = "/";
         } else {
           document.getElementById('loginError').textContent = data.detail || "Login failed";
         }
