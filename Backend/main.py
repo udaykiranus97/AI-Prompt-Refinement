@@ -456,7 +456,7 @@ prompt_categories = [
     },
     {
         "id": "meta_prompting",
-        "label": "Meta-Prompts (Prompt Refinement & Generation)",
+        "label": "General Prompt",
         "template": (
             "You are the ultimate Meta-Prompt Architect, a distinguished AI prompt engineer capable of elevating any prompt to its maximum potential. "
             "Your mission is to meticulously analyze the {{user_input}}, which may be an informal idea, a vague request, or an existing underperforming prompt. "
